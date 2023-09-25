@@ -39,12 +39,19 @@ size_t lomuto(int *array, ssize_t low, ssize_t high, size_t size)
 		if (array[j] < pivot)
 		{
 			i++;
-			swap(&array[i], &array[j]);
-			print_array(array, size);
+			if (i != j)
+			{
+				swap(&array[i], &array[j]);
+				print_array(array, size);
+			}
 		}
 	}
-	swap(&array[i + 1], &array[high]);
-	print_array(array, size);
+
+	if (i + 1 != high)
+	{
+		swap(&array[i + 1], &array[high]);
+		print_array(array, size);
+	}
 
 	return (i + 1);
 }
@@ -64,8 +71,9 @@ void quicksort(int *array, ssize_t low, ssize_t high, size_t size)
 	if (low < high)
 	{
 		size_t pi = lomuto(array, low, high, size);
-		 quicksort(array, low, pi - 1, size);
-		 quicksort(array, pi + 1, high, size);
+
+		quicksort(array, low, pi - 1, size);
+		quicksort(array, pi + 1, high, size);
 	}
 }
 
